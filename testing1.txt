@@ -1,0 +1,40 @@
+add-apt-repository -u ppa:snwh/ppa
+apt-get install -y paper-icon-theme
+
+dpkg -i paper*.deb
+apt-get install -f -y
+
+
+apt-get install -y gnome-themes-standard gtk2-engines-murrine libglib2.0-dev libxml2-utils
+cd /tmp
+wget https://github.com/nana-4/materia-theme/archive/master.tar.gz
+tar xz -f master.tar.gz
+cd materia-theme-master
+./install.sh
+
+xfconf-query -c xsettings -p /Net/ThemeName -s "Materia-dark"
+xfconf-query -c xsettings -p /Net/IconThemeName -s "Paper"
+
+#apt-get install -y materia-gtk-theme
+
+
+add-apt-repository -y ppa:xuzhen666/dockbarx
+apt-get update
+apt-get install -y dockbarx xfce4-dockbarx-plugin dockbarx-themes-extra
+
+
+curl -s https://api.github.com/repos/nana-4/materia-theme/releases/latest \
+| grep "browser_download_url.*deb" \
+| cut -d : -f 2,3 \
+| tr -d \" \
+| wget -qi -
+
+
+# restart vnc
+vncserver -kill $DISPLAY &> $STARTUPDIR/vnc_startup.log \
+    || rm -rfv /tmp/.X*-lock /tmp/.X11-unix &> $STARTUPDIR/vnc_startup.log \
+    || echo "no locks present"
+vncserver $DISPLAY -depth $VNC_COL_DEPTH -geometry $VNC_RESOLUTION &> $STARTUPDIR/no_vnc_startup.log
+
+apt-get --no-install-recommends install xserver-xorg xserver-xorg-video-fbdev xinit
+apt-get --no-install-recommends install xserver-xorg xserver-xorg-video-fbdev xinit pciutils xinput xfonts-100dpi xfonts-75dpi xfonts-scalable

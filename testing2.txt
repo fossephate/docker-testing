@@ -1,0 +1,8 @@
+docker build -t "xfce:01" .
+
+docker images
+docker run -i -t xfce:01
+docker run -i -p 5901:5901 --rm --name test -t xfce:01 /bin/bash
+docker exec -it --user root test bash
+
+docker rm test
