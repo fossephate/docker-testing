@@ -72,7 +72,10 @@ RUN apt-get install -y \
     locales \
     bzip2 \
     python-numpy \
-    supervisor
+    supervisor \
+    nodejs \
+    npm \
+    git
 
 RUN apt-get purge -y pm-utils xscreensaver* && \
     apt-get -y clean
