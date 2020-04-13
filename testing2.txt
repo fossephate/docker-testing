@@ -2,7 +2,7 @@ docker build -t "box:01" .
 
 docker images
 docker run -i -t box:01
-docker run -i -p 5901:5901 --memory 1024m --rm --name test -t box:01 /bin/bash
+docker run -i -p 5901:5901 --memory 1024m --rm --name test --security-opt seccomp=$(pwd)/chrome.json -t box:01 /bin/bash
 docker exec -it --user root test bash
 
 docker rm test
