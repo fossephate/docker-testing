@@ -84,7 +84,7 @@ chmod 600 $PASSWD_PATH
 cd /headless/rgio-host/
 git pull origin master
 # npm i --save https://github.com/fossephate/robotjs/tarball/master
-npm i .
+# npm i .
 npm run build:native
 npm run build:dev
 # chmod +x ./misc/utils/ffmpeg

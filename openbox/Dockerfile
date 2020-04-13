@@ -31,7 +31,7 @@ ENV HOME=/headless \
     NO_VNC_HOME=/headless/noVNC \
     DEBIAN_FRONTEND=noninteractive \
     VNC_COL_DEPTH=24 \
-    VNC_RESOLUTION=1280x1024 \
+    VNC_RESOLUTION=1920x1080 \
     VNC_PW=password \
     VNC_VIEW_ONLY=false \
     LANG='en_US.UTF-8' \
@@ -80,6 +80,9 @@ RUN mkdir -p $NO_VNC_HOME/utils/websockify && \
     wget -qO- https://github.com/novnc/websockify/archive/v0.9.0.tar.gz | tar xz --strip 1 -C $NO_VNC_HOME/utils/websockify && \
     chmod +x -v $NO_VNC_HOME/utils/*.sh && \
     cp -f /headless/noVNC/vnc.html /headless/noVNC/index.html
+
+RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
+RUN nvm install 12.16.1
 
 # inject files
 ADD ./src/scripts $STARTUPDIR
