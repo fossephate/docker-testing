@@ -2,6 +2,8 @@
 
 FROM phusion/baseimage:0.11
 
+CMD ["/sbin/my_init"]
+
 MAINTAINER Matthew Fosse "fossephate@gmail.com"
 ENV REFRESHED_AT 2020-03-10-21:38
 ENV VERSION 1.2.11
@@ -64,29 +66,8 @@ RUN apt-get install -y \
     npm \
     libx11-dev \
     libxtst-dev \
-    libpng++-dev
-
-# RUN apt-get install -y \
-#     openssh-client \
-#     openssl \
-#     dnsutils \
-#     curl \
-#     screen \
-#     wget \
-#     rsync \
-#     whois \
-#     netcat \
-#     nmap \
-#     vim \
-#     wget \
-#     net-tools \
-#     locales \
-#     bzip2 \
-#     python-numpy \
-#     supervisor \
-#     nodejs \
-#     npm \
-#     git
+    libpng++-dev \
+    ffmpeg
 
 RUN apt-get purge -y pm-utils xscreensaver* && \
     apt-get -y clean
@@ -102,7 +83,8 @@ RUN mkdir -p $NO_VNC_HOME/utils/websockify && \
 
 # inject files
 ADD ./src/scripts $STARTUPDIR
-ADD ./src/files/ $HOME
+ADD ./src/files/home $HOME
+ADD ./src/files/etc /etc
 
 # install materia and paper icons
 # RUN apt-get install -y gnome-themes-standard gtk2-engines-murrine libglib2.0-dev libxml2-utils
@@ -126,7 +108,7 @@ CMD \
 # Openbox
   (export DISPLAY=:1 && openbox-session) &
 
-CMD ["/sbin/my_init"]
+
 
 
 USER 1000

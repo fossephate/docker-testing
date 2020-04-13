@@ -83,11 +83,11 @@ chmod 600 $PASSWD_PATH
 # git clone --recurse-submodules https://github.com/fossephate/rgio-host/
 cd /headless/rgio-host/
 git pull origin master
-npm i --save https://github.com/fossephate/robotjs/tarball/master
+# npm i --save https://github.com/fossephate/robotjs/tarball/master
 npm i .
 npm run build:native
 npm run build:dev
-chmod +x ./misc/utils/ffmpeg
+# chmod +x ./misc/utils/ffmpeg
 # ./node_modules/.bin/electron --no-sandbox .
 
 
