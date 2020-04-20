@@ -13,12 +13,13 @@ else
     cd $HOSTFILES
 fi
 
-git pull --recurse-submodules origin master
+# git pull --recurse-submodules origin master
 cd $HOSTFILES
 
 # todo: check if necessary
-# npm i --production
-# npm run build:native
+npm i --production
+npm run build:native
+npm rebuild
 
 
 cd $CURRENT_DIR

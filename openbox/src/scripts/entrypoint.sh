@@ -82,6 +82,7 @@ chmod 600 $PASSWD_PATH
 # cd /headless/
 # git clone --recurse-submodules https://github.com/fossephate/rgio-host/
 cd /headless/host/
+git pull origin master
 # rm .git
 # git init
 # git remote add origin $GITHUBURL
@@ -94,29 +95,29 @@ cd /headless/host/
 # ./node_modules/.bin/electron --no-sandbox .
 
 
-## start vncserver and noVNC webclient
-echo -e "\n------------------ start noVNC  ----------------------------"
-if [[ $DEBUG == true ]]; then echo "$NO_VNC_HOME/utils/launch.sh --vnc localhost:$VNC_PORT --listen $NO_VNC_PORT"; fi
-$NO_VNC_HOME/utils/launch.sh --vnc localhost:$VNC_PORT --listen $NO_VNC_PORT &> $STARTUPDIR/no_vnc_startup.log &
-PID_SUB=$!
+# ## start vncserver and noVNC webclient
+# echo -e "\n------------------ start noVNC  ----------------------------"
+# if [[ $DEBUG == true ]]; then echo "$NO_VNC_HOME/utils/launch.sh --vnc localhost:$VNC_PORT --listen $NO_VNC_PORT"; fi
+# $NO_VNC_HOME/utils/launch.sh --vnc localhost:$VNC_PORT --listen $NO_VNC_PORT &> $STARTUPDIR/no_vnc_startup.log &
+# PID_SUB=$!
 
-echo -e "\n------------------ start VNC server ------------------------"
-echo "remove old vnc locks to be a reattachable container"
-vncserver -kill $DISPLAY &> $STARTUPDIR/vnc_startup.log \
-    || rm -rfv /tmp/.X*-lock /tmp/.X11-unix &> $STARTUPDIR/vnc_startup.log \
-    || echo "no locks present"
+# echo -e "\n------------------ start VNC server ------------------------"
+# echo "remove old vnc locks to be a reattachable container"
+# vncserver -kill $DISPLAY &> $STARTUPDIR/vnc_startup.log \
+#     || rm -rfv /tmp/.X*-lock /tmp/.X11-unix &> $STARTUPDIR/vnc_startup.log \
+#     || echo "no locks present"
 
-echo -e "start vncserver with param: VNC_COL_DEPTH=$VNC_COL_DEPTH, VNC_RESOLUTION=$VNC_RESOLUTION\n..."
-if [[ $DEBUG == true ]]; then echo "vncserver $DISPLAY -depth $VNC_COL_DEPTH -geometry $VNC_RESOLUTION"; fi
-vncserver $DISPLAY -depth $VNC_COL_DEPTH -geometry $VNC_RESOLUTION &> $STARTUPDIR/no_vnc_startup.log
+# echo -e "start vncserver with param: VNC_COL_DEPTH=$VNC_COL_DEPTH, VNC_RESOLUTION=$SCREEN_RESOLUTION\n..."
+# if [[ $DEBUG == true ]]; then echo "vncserver $DISPLAY -depth $VNC_COL_DEPTH -geometry $SCREEN_RESOLUTION"; fi
+# vncserver $DISPLAY -depth $VNC_COL_DEPTH -geometry $SCREEN_RESOLUTION &> $STARTUPDIR/no_vnc_startup.log
 
-# tail -f $STARTUPDIR/*.log $HOME/.vnc/*$DISPLAY.log
 
-if [ -z "$1" ] || [[ $1 =~ -w|--wait ]]; then
-    wait $PID_SUB
-else
-    # unknown option ==> call command
-    echo -e "\n\n------------------ EXECUTE COMMAND ------------------"
-    echo "Executing command: '$@'"
-    exec "$@"
-fi
+# if [ -z "$1" ] || [[ $1 =~ -w|--wait ]]; then
+#     wait $PID_SUB
+# else
+#     # unknown option ==> call command
+#     echo -e "\n\n------------------ EXECUTE COMMAND ------------------"
+#     echo "Executing command: '$@'"
+#     exec "$@"
+# fi
+

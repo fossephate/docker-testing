@@ -31,7 +31,7 @@ ENV HOME=/headless \
     NO_VNC_HOME=/headless/noVNC \
     DEBIAN_FRONTEND=noninteractive \
     VNC_COL_DEPTH=24 \
-    VNC_RESOLUTION=1920x1080 \
+    SCREEN_RESOLUTION=1920x1080 \
     VNC_PW=password \
     VNC_VIEW_ONLY=false \
     LANG='en_US.UTF-8' \
@@ -102,17 +102,17 @@ RUN chmod +x /headless/host/misc/utils/ffmpeg
 
 # todo: delete /tmp files
 
-RUN find $STARTUPDIR $HOME -name '*.sh' -exec chmod a+x {} + && \
-    find $STARTUPDIR $HOME -name '*.desktop' -exec chmod a+x {} + && \
-    chgrp -R 0 $STARTUPDIR $HOME && \
-    chmod -R a+rw $STARTUPDIR $HOME && \
-    find $STARTUPDIR $HOME -type d -exec chmod a+x {} + && \
-    echo LANG=en_US.UTF-8 > /etc/default/locale && \
-    locale-gen en_US.UTF-8
+# RUN find $STARTUPDIR $HOME -name '*.sh' -exec chmod a+x {} + && \
+#     find $STARTUPDIR $HOME -name '*.desktop' -exec chmod a+x {} + && \
+#     chgrp -R 0 $STARTUPDIR $HOME && \
+#     chmod -R a+rw $STARTUPDIR $HOME && \
+#     find $STARTUPDIR $HOME -type d -exec chmod a+x {} + && \
+#     echo LANG=en_US.UTF-8 > /etc/default/locale && \
+#     locale-gen en_US.UTF-8
 
 CMD \
 # X Server
-  Xvfb :1 -screen 0 $VNC_RESOLUTIONx16 &
+  Xvfb :1 -screen 0 $SCREEN_RESOLUTIONx16 &
 # Openbox
   # (export DISPLAY=:1 && openbox-session) &
 
