@@ -1,0 +1,3 @@
+[submodule "src/files/home/host"]
+	path = src/files/home/host
+	url = https://github.com/fossephate/rgio-host

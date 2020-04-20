@@ -4,14 +4,17 @@ CURRENT_DIR=$PWD
 VMHOME=$PWD/src/files/home/
 HOSTFILES=$PWD/src/files/home/host/
 
-if test -d "$HOSTFILES"; then
-    cd $HOSTFILES
-    git pull --recurse-submodules
-else 
-    cd $VMHOME
-    git clone --recurse-submodules https://github.com/fossephate/rgio-host host
-    cd $HOSTFILES
-fi
+# if test -d "$HOSTFILES"; then
+#     cd $HOSTFILES
+#     git pull --recurse-submodules
+# else 
+#     cd $VMHOME
+#     git clone --recurse-submodules https://github.com/fossephate/rgio-host host
+#     cd $HOSTFILES
+# fi
+
+git pull --recurse-submodules
+cd $HOSTFILES
 
 # todo: check if necessary
 npm i --production

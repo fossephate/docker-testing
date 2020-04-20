@@ -1,0 +1,1 @@
+sudo docker run -i -p 5901:5901 --memory 1024m --rm --name test --security-opt seccomp=$(pwd)/src/files/chrome.json -t box /bin/bash

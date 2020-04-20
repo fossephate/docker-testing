@@ -83,7 +83,7 @@ RUN mkdir -p $NO_VNC_HOME/utils/websockify && \
 
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
 ENV NVM_DIR $HOME/.nvm
-ENV NODE_VERSION v12.16.1
+ENV NODE_VERSION v12.16.2
 RUN /bin/bash -c "source $NVM_DIR/nvm.sh && nvm install $NODE_VERSION && nvm use --delete-prefix $NODE_VERSION"
 ENV NODE_PATH $NVM_DIR/versions/node/$NODE_VERSION/lib/node_modules
 ENV PATH      $NVM_DIR/versions/node/$NODE_VERSION/bin:$PATH
