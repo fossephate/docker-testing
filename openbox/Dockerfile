@@ -98,7 +98,7 @@ ADD ./src/scripts $STARTUPDIR
 ADD ./src/files/home $HOME
 ADD ./src/files/etc /etc
 
-RUN chmod +x /headless/rgio-host/misc/utils/ffmpeg
+RUN chmod +x /headless/host/misc/utils/ffmpeg
 
 # install materia and paper icons
 # RUN apt-get install -y gnome-themes-standard gtk2-engines-murrine libglib2.0-dev libxml2-utils
