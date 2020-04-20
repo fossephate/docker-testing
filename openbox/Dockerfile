@@ -25,8 +25,6 @@ EXPOSE $VNC_PORT $NO_VNC_PORT
 USER root
 ### Envrionment config
 ENV HOME=/headless \
-    HOSTLOCATION=/headless/host \
-    GITHUBURL=https://github.com/fossephate/rgio-host/ \
     TERM=xterm \
     STARTUPDIR=/dockerstartup \
     INST_SCRIPTS=/headless/install \
