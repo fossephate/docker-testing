@@ -81,7 +81,7 @@ chmod 600 $PASSWD_PATH
 # install rgio-host:
 # cd /headless/
 # git clone --recurse-submodules https://github.com/fossephate/rgio-host/
-cd /headless/rgio-host/
+cd /headless/host/
 git pull origin master
 # npm i --save https://github.com/fossephate/robotjs/tarball/master
 # npm i .

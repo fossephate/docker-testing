@@ -118,9 +118,9 @@ RUN find $STARTUPDIR $HOME -name '*.sh' -exec chmod a+x {} + && \
 
 CMD \
 # X Server
-  Xvfb :1 -screen 0 1920x1080x16 & \
+  Xvfb :1 -screen 0 $VNC_RESOLUTIONx16 &
 # Openbox
-  (export DISPLAY=:1 && openbox-session) &
+  # (export DISPLAY=:1 && openbox-session) &
 
 
 
