@@ -25,6 +25,8 @@ EXPOSE $VNC_PORT $NO_VNC_PORT
 USER root
 ### Envrionment config
 ENV HOME=/headless \
+    HOSTLOCATION=/headless/host \
+    GITHUBURL=https://github.com/fossephate/rgio-host/ \
     TERM=xterm \
     STARTUPDIR=/dockerstartup \
     INST_SCRIPTS=/headless/install \
@@ -99,12 +101,6 @@ ADD ./src/files/home $HOME
 ADD ./src/files/etc /etc
 
 RUN chmod +x /headless/host/misc/utils/ffmpeg
-
-# install materia and paper icons
-# RUN apt-get install -y gnome-themes-standard gtk2-engines-murrine libglib2.0-dev libxml2-utils
-# RUN /tmp/materia-theme/install.sh
-# RUN dpkg -i /tmp/paper*.deb
-# RUN apt-get install -f -y
 
 # todo: delete /tmp files
 

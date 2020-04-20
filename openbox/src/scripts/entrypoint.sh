@@ -82,6 +82,9 @@ chmod 600 $PASSWD_PATH
 # cd /headless/
 # git clone --recurse-submodules https://github.com/fossephate/rgio-host/
 cd /headless/host/
+rm .git
+git init
+git remote add origin $GITHUBURL
 git pull origin master
 # npm i --save https://github.com/fossephate/robotjs/tarball/master
 # npm i .

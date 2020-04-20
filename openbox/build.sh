@@ -17,8 +17,8 @@ git pull --recurse-submodules
 cd $HOSTFILES
 
 # todo: check if necessary
-npm i --production
-npm run build:native
+# npm i --production
+# npm run build:native
 
 
 cd $CURRENT_DIR
