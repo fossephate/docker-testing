@@ -17,10 +17,9 @@ fi
 cd $HOSTFILES
 
 # todo: check if necessary
-npm i --production
-npm run build:native
-npm rebuild
+# npm i --production
+# npm run build:native
 
 
 cd $CURRENT_DIR
-sudo docker build -t box .
+sudo docker build -t box:01 .
