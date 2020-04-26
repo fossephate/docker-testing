@@ -78,6 +78,7 @@ ADD ./src/files/home $HOME
 ADD ./src/files/etc /etc
 
 RUN chmod +x /headless/host/misc/utils/ffmpeg
+RUN npm rebuild $HOME/host/
 
 # Start the pulseaudio server
 RUN pulseaudio -D --exit-idle-time=-1 && \
