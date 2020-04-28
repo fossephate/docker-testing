@@ -1,7 +1,9 @@
 # This Dockerfile is used to build an headles vnc image based on Ubuntu
 
-FROM phusion/baseimage:0.11
-CMD ["/sbin/my_init"]
+# FROM phusion/baseimage:0.11
+# CMD ["/sbin/my_init"]
+
+FROM alpine:3.7
 
 
 MAINTAINER Matthew Fosse "fossephate@gmail.com"
@@ -21,28 +23,28 @@ ENV DISPLAY=:1 \
 
 WORKDIR $HOME
 
-RUN apt-get update && \
-    apt-get -y dist-upgrade
+# RUN apt-get update && \
+    # apt-get -y dist-upgrade
 
-RUN \
-  apt-get install -y \
-# X Server
-  xvfb \
-# Openbox
-  openbox menu \
-# git
-  git
+# RUN \
+#   pkg add \
+# # X Server
+#   xvfb \
+# # Openbox
+#   openbox menu \
+# # git
+#   git
 
-RUN apt-get install -y \
-    chromium-browser chromium-browser-l10n chromium-codecs-ffmpeg \
-    # alsa-utils \
-    pulseaudio socat \
-    pulseaudio-equalizer \
-    libnss-wrapper \
-    wget \
-    ffmpeg \
-    # dev
-    nano
+# RUN apk add \
+#     chromium-browser chromium-browser-l10n chromium-codecs-ffmpeg \
+#     # alsa-utils \
+#     pulseaudio socat \
+#     pulseaudio-equalizer \
+#     libnss-wrapper \
+#     wget \
+#     ffmpeg \
+#     # dev
+#     nano
 
 # dev
 # RUN apt-get install -y \
@@ -54,8 +56,8 @@ RUN apt-get install -y \
 #     # alsa:
 #     libasound2-dev
 
-RUN apt-get purge -y pm-utils xscreensaver* && \
-    apt-get -y clean
+# RUN apt-get purge -y pm-utils xscreensaver* && \
+    # apt-get -y clean
 
 
 
@@ -74,6 +76,15 @@ ADD ./src/files/etc /etc
 
 RUN chmod +x /headless/host/misc/utils/ffmpeg
 RUN npm rebuild $HOME/host/
+
+# Start the pulseaudio server
+#RUN pulseaudio -D --exit-idle-time=-1 && \
+# Load the virtual sink and set it as default
+#pacmd load-module module-virtual-sink sink_name=v1 && \
+#pacmd set-default-sink v1 && \
+# set the monitor of v1 sink to be the default source
+#pacmd set-default-source v1.monitor
+
 
 # todo: delete /tmp files
 

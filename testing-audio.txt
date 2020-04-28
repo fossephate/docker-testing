@@ -1,0 +1,89 @@
+https://askubuntu.com/questions/963756/installing-google-chrome-remote-desktop-messed-up-my-box
+# refresh pulse audio devices
+pacmd unload-module module-udev-detect && pacmd load-module module-udev-detect
+
+https://github.com/mviereck/x11docker/wiki/Container-sound:-ALSA-or-Pulseaudio
+
+
+pactl load-module module-native-protocol-unix socket=/tmp/pulseaudio.socket
+
+
+
+# https://unix.stackexchange.com/questions/174379/how-can-i-create-a-virtual-output-in-pulseaudiot
+# add sink:
+pacmd load-module module-null-sink sink_name=MySink
+pacmd update-sink-proplist MySink device.description=MySink
+# add loopback device to sink:
+pacmd load-module module-loopback sink=MySink
+
+
+# kill pulseaudio (may have to use multiple times to stop all instances)
+pulseaudio --kill
+sudo killall pulseaudio
+sudo rm -rf /tmp/pulse*
+
+# list pulseaudio sources
+pactl list short sources
+pactl list short sinks
+
+
+# Start the pulseaudio server
+RUN pulseaudio -D --exit-idle-time=-1 && \
+# Load the virtual sink and set it as default
+pacmd load-module module-virtual-sink sink_name=v1 && \
+pacmd set-default-sink v1 && \
+# set the monitor of v1 sink to be the default source
+pacmd set-default-source v1.monitor
+
+
+DOCKER_IP=
+ip -4 -o a | grep docker0 | awk '{print $4}'
+
+
+
+read LOWERPORT UPPERPORT < /proc/sys/net/ipv4/ip_local_port_range
+while : ; do
+  PULSE_PORT="`shuf -i $LOWERPORT-$UPPERPORT -n 1`"
+  ss -lpn | grep -q ":$PULSE_PORT " || break
+done
+
+PULSE_MODULE_ID=$(pactl load-module module-native-protocol-tcp port=$PULSE_PORT auth-ip-acl=$DOCKER_IP/16)
+
+
+
+ffmpeg -f pulse -i default -f mpegts -ar 44100 -ac 1 -bufsize 128k -c:a mp2 -b:a 128k -async 1 -muxdelay 0.001 -
+
+ffmpeg -f pulse -i default out.mp3
+
+
+Xvfb :1 -screen 0 1920x1080x16 &
+openbox-session &
+chromium-browser --disable-dev-shm-usage &
+
+node --experimental-modules ./src/libs/lagless/HostStream.mjs \
+--user="fosse5" --password="QWERTY1234" \
+--drawMouse="true" --usePulse="true" \
+--audioDevice="sink-0.monitor" --useLocalFfmpegInstall="true" \
+--debug="false" \
+--videoBitrate=6000 --combineAV="false" \
+--groupOfPictures=120 --muxDelay="0.0001" \
+--resolution=540 --videoBufferSize=16000 --audioBufferSize=128
+
+node --experimental-modules ./src/libs/lagless/HostStream.mjs \
+--user="fosse6" --password="QWERTY1234" \
+--drawMouse="true" --usePulse="true" \
+--audioDevice="sink-1.monitor" --useLocalFfmpegInstall="true" \
+--debug="false" \
+--videoBitrate=6000 --combineAV="false" \
+--groupOfPictures=90 --muxDelay="0.0001" \
+--resolution=540 --videoBufferSize=12000 --audioBufferSize=128
+
+
+
+
+ffmpeg -f x11grab -video_size 1920x1080 -framerate 60 \
+-draw_mouse 1 -i :1+0,0 -f pulse -i default \
+-f mpegts -ar 44100 -ac 1 -c:a mp2 -b:a 128k -async 1 \
+-muxdelay 0.001 -r 30 -vf scale=960:540 -b:v 3000k -maxrate 3000k \
+-bf 0 -me_method zero \
+-g 60 -bufsize 512 -c:v mpeg1video -

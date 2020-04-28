@@ -43,8 +43,10 @@ source /etc/bash.bashrc
 # install rgio-host:
 # cd /headless/
 # git clone --recurse-submodules https://github.com/fossephate/rgio-host/
-cd /headless/host/
-git pull origin master
+
+# cd /headless/host/
+# git pull origin master
+
 # npm i --save https://github.com/fossephate/robotjs/tarball/master
 # npm i .
 # npm run build:native
@@ -63,10 +65,10 @@ git pull origin master
 # rm -rfv /tmp/.X*-lock /tmp/.X11-unix
 
 # Xvfb :1 -screen 0 $SCREEN_RESOLUTIONx16 &
-Xvfb :1 -screen 0 1920x1080x16 &
-openbox-session &
-# https://stackoverflow.com/questions/56218242/headless-chromium-on-docker-fails
-#chromium-browser --disable-dev-shm-usage &
+# Xvfb :1 -screen 0 1920x1080x16 &
+# openbox-session &
+# # https://stackoverflow.com/questions/56218242/headless-chromium-on-docker-fails
+# chromium-browser --disable-dev-shm-usage &
 
 # xset -dpms &
 # xset s noblank &
