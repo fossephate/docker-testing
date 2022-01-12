@@ -1,5 +1,3 @@
-# This Dockerfile is used to build an headles vnc image based on Ubuntu
-
 FROM phusion/baseimage:0.11
 CMD ["/sbin/my_init"]
 
@@ -15,9 +13,9 @@ ENV DISPLAY=:1 \
     TERM=xterm \
     STARTUPDIR=/dockerstartup \
     SCREEN_RESOLUTION=1920x1080 \
-    LANG='en_US.UTF-8' \
-    LANGUAGE='en_US:en' \
-    LC_ALL='en_US.UTF-8'
+    USERNAME=hostbot \
+    PW=password
+    
 
 WORKDIR $HOME
 
@@ -29,30 +27,19 @@ RUN \
 # X Server
   xvfb \
 # Openbox
-  openbox menu \
-# git
-  git
+  openbox \
+  pulseaudio \
+  ffmpeg \
+  chromium-browser
 
-RUN apt-get install -y \
-    chromium-browser chromium-browser-l10n chromium-codecs-ffmpeg \
-    # alsa-utils \
-    pulseaudio socat \
-    pulseaudio-equalizer \
-    libnss-wrapper \
-    wget \
-    ffmpeg \
-    # dev
-    nano
+# RUN apt-get install -y \
+# chromium-browser chromium-browser-l10n chromium-codecs-ffmpeg chromium-codecs-ffmpeg-extra
+
 
 # dev
-# RUN apt-get install -y \
-#     npm \
-#     libx11-dev \
-#     libxtst-dev \
-#     libpng++-dev \
-#     ffmpeg \
-#     # alsa:
-#     libasound2-dev
+RUN apt-get install -y git
+
+# removed: socat libnss-wrapper
 
 RUN apt-get purge -y pm-utils xscreensaver* && \
     apt-get -y clean
@@ -72,6 +59,8 @@ ADD ./src/scripts $STARTUPDIR
 ADD ./src/files/home $HOME
 ADD ./src/files/etc /etc
 
+
+# RUN chmod -w /etc/opt/chrome/policies/managed
 RUN chmod +x /headless/host/misc/utils/ffmpeg
 RUN npm rebuild $HOME/host/
 
@@ -85,19 +74,22 @@ RUN find $STARTUPDIR $HOME -name '*.sh' -exec chmod a+x {} + && \
     echo LANG=en_US.UTF-8 > /etc/default/locale && \
     locale-gen en_US.UTF-8
 
-# CMD \
-# # X Server
-#   Xvfb :1 -screen 0 $SCREEN_RESOLUTIONx16 &
-# Openbox
-  # (export DISPLAY=:1 && openbox-session) &
-
-# CMD \
-# # X Server
-#   Xvfb :1 -screen 0 1920x1080x16 &
+# RUN chmod +x $STARTUPDIR/entrypoint.sh
+# RUN chgrp -R 0 $STARTUPDIR $HOME
+# RUN chmod -R a+rw $STARTUPDIR $HOME
 
 
+# Option1: Using unencrypted password/ specifying password
+# RUN useradd -m $USERNAME --uid=${UID} && echo "${USERNAME}:${PW}" | chpasswd
+# https://stackoverflow.com/questions/27701930/add-user-to-docker-container
+RUN useradd -ms /bin/bash -d $HOME hostbot
 
-USER 1000
+USER hostbot
 
 ENTRYPOINT ["/dockerstartup/entrypoint.sh"]
-CMD ["--wait"]
+# CMD ["--wait"]
+
+
+# ENTRYPOINT "/dockerstartup/entrypoint.sh"
+
+# CMD bash -C "/dockerstartup/entrypoint.sh;bash"

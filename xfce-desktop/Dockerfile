@@ -95,10 +95,10 @@ ADD ./src/scripts $STARTUPDIR
 ADD ./src/theming/ /tmp
 
 # install materia and paper icons
-RUN apt-get install -y gnome-themes-standard gtk2-engines-murrine libglib2.0-dev libxml2-utils
-RUN /tmp/materia-theme/install.sh
-RUN dpkg -i /tmp/paper*.deb
-RUN apt-get install -f -y
+# RUN apt-get install -y gnome-themes-standard gtk2-engines-murrine libglib2.0-dev libxml2-utils
+# RUN /tmp/materia-theme/install.sh
+# RUN dpkg -i /tmp/paper*.deb
+# RUN apt-get install -f -y
 
 # todo: delete /tmp files
 

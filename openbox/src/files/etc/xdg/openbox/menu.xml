@@ -6,7 +6,7 @@
                 file:///usr/share/openbox/menu.xsd">
 
 <menu id="root-menu" label="Openbox 3">
-  <!-- This requires the presence of the 'menu' package to work -->
+  <!-- This requires the presence of the 'menu' package to work
   <menu id="/Debian" />
   <separator />
   <menu id="client-list-menu" />
@@ -15,7 +15,7 @@
   <item label="Terminal">
     <action name="Execute"><execute>/usr/bin/xfce4-terminal</execute></action>
   </item>
-  <separator />
+  <separator /> -->
 </menu>
 
 </openbox_menu>

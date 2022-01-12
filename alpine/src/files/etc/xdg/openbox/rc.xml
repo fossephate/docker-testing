@@ -117,7 +117,7 @@
 
        use obconf if you want to change these without having to log out
        and back in -->
-    <number>4</number>
+    <number>1</number>
     <firstdesk>1</firstdesk>
     <names>
       <!-- set names up here if you want to, like this:
@@ -429,13 +429,13 @@
         <action name="FocusToBottom"/>
         <action name="Unfocus"/>
       </mousebind>
-      <mousebind button="Right" action="Press">
+      <!-- <mousebind button="Right" action="Press">
         <action name="Focus"/>
         <action name="Raise"/>
         <action name="ShowMenu">
           <menu>client-menu</menu>
         </action>
-      </mousebind>
+      </mousebind> -->
     </context>
     <context name="Top">
       <mousebind button="Left" action="Drag">
@@ -464,13 +464,13 @@
           <edge>bottom</edge>
         </action>
       </mousebind>
-      <mousebind button="Right" action="Press">
+      <!-- <mousebind button="Right" action="Press">
         <action name="Focus"/>
         <action name="Raise"/>
         <action name="ShowMenu">
           <menu>client-menu</menu>
         </action>
-      </mousebind>
+      </mousebind> -->
     </context>
     <context name="TRCorner BRCorner TLCorner BLCorner">
       <mousebind button="Left" action="Press">
@@ -505,13 +505,13 @@
           <menu>client-menu</menu>
         </action>
       </mousebind>
-      <mousebind button="Right" action="Press">
+      <!-- <mousebind button="Right" action="Press">
         <action name="Focus"/>
         <action name="Raise"/>
         <action name="ShowMenu">
           <menu>client-menu</menu>
         </action>
-      </mousebind>
+      </mousebind> -->
     </context>
     <context name="AllDesktops">
       <mousebind button="Left" action="Press">
@@ -628,11 +628,11 @@
           <menu>client-list-combined-menu</menu>
         </action>
       </mousebind>
-      <mousebind button="Right" action="Press">
+      <!-- <mousebind button="Right" action="Press">
         <action name="ShowMenu">
           <menu>root-menu</menu>
         </action>
-      </mousebind>
+      </mousebind> -->
     </context>
     <context name="MoveResize">
       <mousebind button="Up" action="Click">
@@ -661,7 +661,7 @@
     <!-- You can specify more than one menu file in here and they are all loaded,
        just don't make menu ids clash or, well, it'll be kind of pointless -->
     <!-- default menu file (or custom one in $HOME/.config/openbox/) -->
-    <file>menu.xml</file>
+    <!-- <file>menu.xml</file> -->
     <hideDelay>200</hideDelay>
     <!-- if a press-release lasts longer than this setting (in milliseconds), the
        menu is hidden again -->

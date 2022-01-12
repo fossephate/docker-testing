@@ -1,16 +1,19 @@
 
 
-
+NUM=$1
 pulseaudio -Dv
-pactl load-module module-native-protocol-unix socket=/tmp/pulseaudio-$SOCKET_NUM.socket sink_name=sink-$SOCKET_NUM
-sudo docker run -i --memory 2048m --rm --name host-$SOCKET_NUM \
--e PULSE_SERVER=unix:/tmp/pulseaudio-$SOCKET_NUM.socket \
--e PULSE_COOKIE=/tmp/pulseaudio-$SOCKET_NUM.cookie \
---volume /tmp/pulseaudio-$SOCKET_NUM.socket:/tmp/pulseaudio-$SOCKET_NUM.socket \
+pactl load-module module-native-protocol-unix socket=/tmp/pulseaudio.socket
+pacmd load-module module-null-sink sink_name=sink-$NUM
+sudo docker run -i --memory 4096m --rm --name host-$NUM \
+-e PULSE_SERVER=unix:/tmp/pulseaudio.socket \
+-e PULSE_COOKIE=/tmp/pulseaudio.cookie \
+-e PULSE_SINK=sink-$NUM \
+-e NUM=$NUM \
+--volume /tmp/pulseaudio.socket:/tmp/pulseaudio.socket \
 --volume $(pwd)/src/configs/pulseaudio.client.conf:/etc/pulse/client.conf \
 --user $(id -u):$(id -g) \
---security-opt seccomp=$(pwd)/src/files/chrome.json \
--t alpinebox:01 /bin/bash
+--security-opt seccomp=$(pwd)/src/configs/chrome.json \
+-t rgio-host:01 /bin/bash
 
 
 # sudo docker run -i --memory 2048m --rm --name host$SOCKET_NUM \

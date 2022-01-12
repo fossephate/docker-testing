@@ -1,8 +1,69 @@
-docker build -t "box:01" .
+sudo docker build -t "box:01" .
+sudo docker images
+sudo docker run -i -t box:01
+sudo docker run -i -p 5901:5901 --memory 1024m --rm --name test -t box:01 /bin/bash
+sudo docker exec -it --user root test bash
+sudo docker rm test
 
-docker images
-docker run -i -t box:01
-docker run -i -p 5901:5901 --memory 1024m --rm --name test --security-opt seccomp=$(pwd)/chrome.json -t box:01 /bin/bash
-docker exec -it --user root test bash
 
-docker rm test
+
+sudo docker run -i --memory 2048m --rm --name host-0 \
+    -e PULSE_SERVER=unix:/tmp/pulseaudio.socket \
+    -e PULSE_COOKIE=/tmp/pulseaudio.cookie \
+    -e PULSE_SINK=sink-0 \
+    -e NUM=0 \
+    -e USERNAME=fosse5 \
+    -e PASSWORD=QWERTY1234 \
+    --volume /tmp/pulseaudio.socket:/tmp/pulseaudio.socket \
+    --volume $(pwd)/src/configs/pulseaudio.client.conf:/etc/pulse/client.conf \
+    --user $(id -u):$(id -g) \
+    --security-opt seccomp=$(pwd)/src/configs/chrome.json \
+    -t rgio-host:01 /bin/bash
+
+
+sudo docker run -i --memory 2048m --rm --name host-0 \
+    -e PULSE_SERVER=unix:/tmp/pulseaudio.socket \
+    -e PULSE_COOKIE=/tmp/pulseaudio.cookie \
+    -e PULSE_SINK=sink-0 \
+    -e NUM=0 \
+    -e USERNAME=fosse5 \
+    -e PASSWORD=QWERTY1234 \
+    --volume /tmp/pulseaudio.socket:/tmp/pulseaudio.socket \
+    --volume $(pwd)/src/configs/pulseaudio.client.conf:/etc/pulse/client.conf \
+    --user $(id -u):$(id -g) \
+    --security-opt seccomp=$(pwd)/src/configs/chrome.json \
+    -t rgio-host:01 node --experimental-modules ./src/libs/lagless/HostStream.mjs \
+--user="$USERNAME" \
+--password="$PASSWORD" \
+--drawMouse="true" --usePulse="true" \
+--useLocalFfmpegInstall="true" \
+--videoBitrate=6000 --combineAV="false" \
+--muxDelay="0.0001" \
+--resolution=540 --debug="true"
+
+
+
+node --experimental-modules ./src/libs/lagless/HostStream.mjs \
+--user="$USERNAME" \
+--password="$PASSWORD" \
+--drawMouse="true" --usePulse="true" \
+--audioDevice="sink-0.monitor" --useLocalFfmpegInstall="true" \
+--debug="false" \
+--videoBitrate=6000 --combineAV="false" \
+--muxDelay="0.0001" \
+--resolution=540
+
+
+
+STREAM_ARGS='--debug="true" --streamKey="6ed9401054358b34a2c2294c5c91b22cf26a5312ee990b23bc11e6eaa82ab5cc0ba8c18f64660cf0838f6e67e5baf271bdfd2d43870b372c799aa55636990cff" --usePulse="true" --useLocalFfmpegInstall="true" --useLocalFfmpegInstall="true" --capture=desktop --resolution=540 --videoBitrate=5000'
+
+sudo docker run -i --memory 2048m --rm --name host-0 \
+    -e PULSE_SERVER=unix:/tmp/pulseaudio.socket \
+    -e PULSE_COOKIE=/tmp/pulseaudio.cookie \
+    -e PULSE_SINK=sink-0 \
+    -e STREAM_ARGS="$STREAM_ARGS" \
+    --volume /tmp/pulseaudio.socket:/tmp/pulseaudio.socket \
+    --volume $(pwd)/src/configs/pulseaudio.client.conf:/etc/pulse/client.conf \
+    --user $(id -u):$(id -g) \
+    --security-opt seccomp=$(pwd)/src/configs/chrome.json \
+    -t rgio-host:01 /bin/bash

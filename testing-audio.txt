@@ -56,18 +56,11 @@ ffmpeg -f pulse -i default -f mpegts -ar 44100 -ac 1 -bufsize 128k -c:a mp2 -b:a
 ffmpeg -f pulse -i default out.mp3
 
 
-Xvfb :1 -screen 0 1920x1080x16 &
+Xvfb :1 -screen 0 1920x1080x24 &
 openbox-session &
 chromium-browser --disable-dev-shm-usage &
 
-node --experimental-modules ./src/libs/lagless/HostStream.mjs \
---user="fosse5" --password="QWERTY1234" \
---drawMouse="true" --usePulse="true" \
---audioDevice="sink-0.monitor" --useLocalFfmpegInstall="true" \
---debug="false" \
---videoBitrate=6000 --combineAV="false" \
---groupOfPictures=120 --muxDelay="0.0001" \
---resolution=540 --videoBufferSize=16000 --audioBufferSize=128
+
 
 node --experimental-modules ./src/libs/lagless/HostStream.mjs \
 --user="fosse6" --password="QWERTY1234" \
@@ -77,6 +70,49 @@ node --experimental-modules ./src/libs/lagless/HostStream.mjs \
 --videoBitrate=6000 --combineAV="false" \
 --groupOfPictures=90 --muxDelay="0.0001" \
 --resolution=540 --videoBufferSize=12000 --audioBufferSize=128
+
+
+# perfect high quality
+node --experimental-modules ./src/libs/lagless/HostStream.mjs \
+--user="fosse5" --password="QWERTY1234" \
+--drawMouse="true" --usePulse="true" \
+--audioDevice="sink-0.monitor" --useLocalFfmpegInstall="true" \
+--videoBitrate="14000" --resolution=1080 --qmin="2" --qmax="8"
+
+# ultra high quality
+node --experimental-modules ./src/libs/lagless/HostStream.mjs \
+--user="fosse5" --password="QWERTY1234" \
+--drawMouse="true" --usePulse="true" \
+--audioDevice="sink-0.monitor" --useLocalFfmpegInstall="true" \
+--videoBitrate="10000" --resolution=1080 --qmin="4" --qmax="12"
+
+# high quality
+node --experimental-modules ./src/libs/lagless/HostStream.mjs \
+--user="fosse5" --password="QWERTY1234" \
+--drawMouse="true" --usePulse="true" \
+--audioDevice="sink-0.monitor" --useLocalFfmpegInstall="true" \
+--videoBitrate="8000" --resolution=720 --qmin="2" --qmax="10"
+
+# medium quality
+node --experimental-modules ./src/libs/lagless/HostStream.mjs \
+--user="fosse5" --password="QWERTY1234" \
+--drawMouse="true" --usePulse="true" \
+--audioDevice="sink-0.monitor" --useLocalFfmpegInstall="true" \
+--videoBitrate="5000" --resolution=540 --qmin="4" --qmax="10"
+
+# low quality
+node --experimental-modules ./src/libs/lagless/HostStream.mjs \
+--user="fosse5" --password="QWERTY1234" \
+--drawMouse="true" --usePulse="true" \
+--audioDevice="sink-0.monitor" --useLocalFfmpegInstall="true" \
+--videoBitrate="2500" --resolution=480 --qmin="4" --qmax="10"
+
+# ultra low quality
+node --experimental-modules ./src/libs/lagless/HostStream.mjs \
+--user="fosse5" --password="QWERTY1234" \
+--drawMouse="true" --usePulse="true" \
+--audioDevice="sink-0.monitor" --useLocalFfmpegInstall="true" \
+--videoBitrate="1000" --resolution=360 --qmin="6" --qmax="20"
 
 
 

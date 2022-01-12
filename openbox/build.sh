@@ -30,4 +30,4 @@ sudo apt install -y libx11-dev libxtst-dev libpng++-dev ffmpeg libasound2-dev
 #npm rebuild
 
 cd $CURRENT_DIR
-sudo docker build -t box:01 .
+sudo docker build -t rgio-host:01 .
